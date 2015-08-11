@@ -24,15 +24,14 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
+TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
+
 TEMPLATE_DIRS = (
     #See section 5.1.2 for further info on this and template_path
     #http://www.tangowithdjango.com/book17/chapters/templates_static.html
     TEMPLATE_PATH,)
 
-TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
-
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -89,4 +88,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
+STATIC_PATH = os.path.join(BASE_DIR, 'static')
+
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    STATIC_PATH,
+)
