@@ -7,3 +7,7 @@ def index(request):
 
 def about(request):
     return HttpResponse("Rango says: here is the about page! </br> <a href='/rango/'>Index</a>")
+
+def benweb(request):
+    context_dict = {}
+    return render(request, 'benweb/index.html', context_dict)

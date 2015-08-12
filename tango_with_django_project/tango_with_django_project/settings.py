@@ -23,13 +23,19 @@ SECRET_KEY = 'dv8qm0t2z97r^k50%1**q7_bhyrs(pjunzv)^98cakybs#j507'
 DEBUG = True
 
 TEMPLATE_DEBUG = True
-
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
-
 TEMPLATE_DIRS = (
     #See section 5.1.2 for further info on this and template_path
     #http://www.tangowithdjango.com/book17/chapters/templates_static.html
     TEMPLATE_PATH,)
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATIC_PATH = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    STATIC_PATH,)
 
 ALLOWED_HOSTS = []
 
@@ -87,11 +93,3 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-
-STATIC_PATH = os.path.join(BASE_DIR, 'static')
-
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-    STATIC_PATH,
-)

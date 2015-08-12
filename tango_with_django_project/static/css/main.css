@@ -1,0 +1,61 @@
+.nav a {
+    color: #F0EAD6;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 14px 10px;
+    text-transform: uppercase;
+}
+
+.nav li {
+    display: inline;
+}
+
+.nav {
+    background-color: #293E6A
+}
+
+.jumbotron {
+    background-image:url('images/benweb-jumbotron.png');
+    height: 450px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.jumbotron .container {
+    position: relative;
+    top:100px;
+}
+
+.jumbotron h1 {
+    color: #fff;
+    font-size: 80px;  
+    font-family: "GoldenAgeShad", sans-serif;
+    /*font-family: "PeintureFraiche", sans-serif;*/
+    font-weight: bold;
+}
+
+.jumbotron p {
+    font-size: 20px;
+    color: #fff;
+    font-family: "GoldenAge", sans-serif;
+}
+
+.jumbotron a {
+    font-size: 16px;
+    margin-left: 10px
+}
+
+@font-face {
+    font-family: "PeintureFraiche";
+    src: url(fonts/PeintureFraiche.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "GoldenAgeShad";
+    src: url(fonts/GoldenAgeShad.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "GoldenAge";
+    src: url(fonts/GoldenAge.ttf) format("truetype");
+}
