@@ -3,12 +3,13 @@ from rango.models import Category, Page
 
 class CategoryAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,         {'fields': ['name']}),
+        (None,         {'fields': ['name', 'slug']}),
         ('Popularity', {'fields': ['likes', 'views'], 'classes': ['collapse']}),
     ]
     list_display = ('name', 'likes', 'views')
     #list_filter = ['likes']    #Adds filter to category admin page.
     search_fields = ['name']    #Adds search bar for name field.
+    prepopulated_fields = {'slug':('name',)} #pre-populates field as you type name.
 
 class PageAdmin(admin.ModelAdmin):
     fieldsets = [
