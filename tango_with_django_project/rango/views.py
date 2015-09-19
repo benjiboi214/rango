@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from rango.models import Category
-from rango.models import Page
+from rango.models import Category, Page
+from rango.forms import CategoryForm, PageForm
 
 def index(request):
     # Query the database for a list of ALL categories currently stored.
@@ -55,5 +55,61 @@ def category(request, category_name_slug):
     
     #Go render the response and return it to the client.
     return render(request, 'rango/category.html', context_dict)
-    
+
+def add_category(request):
+    #HTTP POST?
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
         
+        
+        #Have we been provided with a valid form?
+        if form.is_valid():
+            #save the new category to the db.
+            form.save(commit=True)
+            
+            #then call the index view to return user back to index page.
+            return index(request)
+        else:
+            #The supplied form contained errors, print them to the terminal.
+            print form.errors
+    else:
+        #If the request was not a POST, display the form to enter details.
+        form = CategoryForm()
+    
+    #Bad form (or form details), no form supplied...
+    #Render the form with error messages (if any)
+    return render(request, 'rango/add_category.html', {'form': form})
+
+
+def add_page(request, category_name_slug):
+    
+    try:
+        #try getting the slug from the db and assigning to short variable
+        cat = Category.objects.get(slug=category_slug_name)
+    except Category.DoesNotExist:
+        #catch the possibilty the category doesn't exist, assign none so if works later.
+        cat = None
+    
+    #check if it is a post reqest.
+    if request.method == 'POST':
+        form = PageForm(request.POST)
+        #check form is valid, if it is continue saving operation
+        if form.is_valid():
+            #if category exists, continue saving.
+            if cat:
+                #save the form
+                page = form.save(commit=False)
+                page.category = cat #set category field to the slug
+                page.views = 0 #set views to zero
+                page.save() #save everything.
+                #Probably better to use a redirect here
+                return category(request, category_name_slug)
+        else:
+            print form.errors
+    
+    else:
+        form = PageForm()
+    
+    context_dict = {'form': form, 'category': cat}
+    
+    return render(request, 'rango/add_page.html', context_dict)
