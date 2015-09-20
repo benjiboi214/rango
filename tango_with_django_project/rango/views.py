@@ -30,7 +30,7 @@ def category(request, category_name_slug):
     #Hint: context dict keys are used in the HTML code to place contextual info. 
     
     #Create a context dictionary which we can pass to the template rendering engine.
-    context_dict = {}
+    context_dict = {'category_name_slug': category_name_slug}
     
     try:
         #Can we find a category name slug with the given name?
@@ -85,7 +85,7 @@ def add_page(request, category_name_slug):
     
     try:
         #try getting the slug from the db and assigning to short variable
-        cat = Category.objects.get(slug=category_slug_name)
+        cat = Category.objects.get(slug=category_name_slug)
     except Category.DoesNotExist:
         #catch the possibilty the category doesn't exist, assign none so if works later.
         cat = None
@@ -110,6 +110,6 @@ def add_page(request, category_name_slug):
     else:
         form = PageForm()
     
-    context_dict = {'form': form, 'category': cat}
+    context_dict = {'form': form, 'category': cat, 'category_name_slug': category_name_slug}
     
     return render(request, 'rango/add_page.html', context_dict)
