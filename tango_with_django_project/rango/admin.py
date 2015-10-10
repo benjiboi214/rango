@@ -20,7 +20,7 @@ class PageAdmin(admin.ModelAdmin):
     search_fields = ['title', 'url']
         
 
-# Register your models here.
+# Register your models here 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Page, PageAdmin)
 admin.site.register(UserProfile)
