@@ -1,18 +1,13 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-{% load staticfiles %} <!-- New line -->
+{% load staticfiles %}
 
-<html>
+{% block title %}About{% endblock %}
 
-    <head>
-        <title>About</title>
-    </head>
+{% block body_block %}
 
-    <body>
-        <h1>About</h1>
-        here is the <strong>about</strong> page!</br>
-        <a href='/rango/'>Index</a><br />
+    <h1>About</h1>
+        Here is the <strong>about</strong> page!</br>
         <img src="{% static "images/benweb-battleships.png" %}" alt="Battleships Terminal pic" />
-    </body>
 
-</html>
+{% endblock %}
