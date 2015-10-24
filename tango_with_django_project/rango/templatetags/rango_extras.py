@@ -5,4 +5,7 @@ register = template.Library()
 
 @register.inclusion_tag('rango/cats.html', takes_context=True)
 def get_category_list(context):
-    return {'cats': Category.objects.all(), 'act_cat': context['category']}
+    if 'category' in context:
+        return {'cats': Category.objects.all(), 'act_cat': context['category']}
+    else:
+        return {'cats': Category.objects.all(), 'act_cat': None}

@@ -5,6 +5,7 @@ from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from rango.bing_search import run_query
 
 # def index(request): #Hashed out is client side cookie example see below for session example.
 #    # Query the database for a list of ALL categories currently stored.
@@ -188,6 +189,18 @@ def add_page(request, category_name_slug):
 @login_required
 def restricted(request):
     return render(request, 'rango/restricted.html', {})
+
+def search(request):
+    result_list = []
+    
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+        
+        if query:
+            #Run our Bing functions
+            result_list = run_query(query)
+    
+    return render(request, 'rango/search.html', {'result_list': result_list})
 
 #################################################
 #Registration Graveyard below. Replaced by Redux#
