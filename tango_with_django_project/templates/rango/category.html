@@ -17,7 +17,7 @@
             {% if pages %}
             <ul class="list-group">
                 {% for page in pages %}
-                <li class="list-group-item"><a href="{{ page.url }}">{{ page.title }}</a> - {{ page.views }} view/s</li>
+                <li class="list-group-item"><a href="{% url 'goto' %}?page_id={{ page.id }}">{{ page.title }}</a> - {{ page.views }} view/s</li>
                 {% endfor %}
             </ul>
             {% else %}

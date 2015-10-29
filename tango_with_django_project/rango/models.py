@@ -15,6 +15,9 @@ class Category(models.Model):
 
     def __unicode__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return '/rango/category/%s/' % self.slug
 
 class Page(models.Model):
     category = models.ForeignKey(Category)

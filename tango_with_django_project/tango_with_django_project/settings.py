@@ -50,6 +50,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'elasticsearch',
+    'haystack',
     'rango',
     'registration'
 )
@@ -103,3 +105,11 @@ REGISTRATION_AUTO_LOGIN = True  #If True, user will be automatically logged in.
 LOGIN_REDIRECT_URL = '/rango/'  #The page you want users to arrive at after they successfully log in
 LOGIN_URL = '/accounts/login'   #The age users are directed to if they are not logged in,
                                 # and they try to access a page requiring auth.
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'haystack',
+    },
+}
