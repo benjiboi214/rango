@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from rango.models import Category, Page
-from rango.forms import CategoryForm, PageForm#, UserForm, UserProfileForm
+from rango.models import Category, Page, UserProfile
+from rango.forms import CategoryForm, PageForm, EditUserForm, EditProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
@@ -189,6 +189,67 @@ def add_page(request, category_name_slug):
 @login_required
 def restricted(request):
     return render(request, 'rango/restricted.html', {})
+
+@login_required
+def profile_view(request):
+    user = request.user
+    profile = UserProfile.objects.get(id=request.user.id)
+    user_initial = {
+        'first_name':user.first_name, 
+        'last_name':user.last_name, 
+        'email':user.email}
+    profile_initial = {
+        'website':profile.website, 
+        'picture':profile.picture}
+    
+    if request.method == 'POST':
+        userform = EditUserForm(data=request.POST, initial=user_initial)
+        profileform = EditProfileForm(request.POST, request.FILES, initial=profile_initial)
+        if userform.is_valid() and profileform.is_valid():
+            user.first_name = request.POST['first_name']
+            user.last_name = request.POST['last_name']
+            user.email = request.POST['email']
+            user.save()
+            
+            profile.website = request.POST['website']
+            if 'picture' in request.FILES:
+                profile.picture = request.FILES['picture']
+            profile.save()
+            
+            return HttpResponseRedirect('/rango/profile')
+    
+    else:
+        userform = EditUserForm(initial=user_initial)
+        profileform = EditProfileForm(initial=profile_initial)
+
+    context = {
+        "userform": userform,
+        "profileform": profileform}
+    
+    return render(request, 'registration/profile.html', context)
+
+#Hashed out copy of above function prior to throwing in POST stuff.
+#@login_required
+#def profile_view(request):
+#    user = request.user
+#    profile = UserProfile.objects.get(id=request.user.id)
+#    userform = EditUserForm(initial={
+#        'first_name':user.first_name, 
+#        'last_name':user.last_name, 
+#        'email':user.email})
+#    profileform = EditProfileForm(initial={
+#        'website':profile.website, 
+#        'picture':profile.picture})
+#    
+#    context = {
+#        "userform": userform,
+#        "profileform": profileform}
+#    
+#    return render(request, 'registration/profile.html', context)
+
+#@login_required
+#def edit_profile(request):
+    
 
 def search(request):
     result_list = []

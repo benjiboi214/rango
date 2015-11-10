@@ -50,6 +50,22 @@ class UserProfileRegistrationForm(RegistrationFormUniqueEmail):
     website = forms.CharField(required=False)
     picture = forms.ImageField(required=False)
 
+class EditUserForm(forms.ModelForm):
+    first_name = forms.CharField(label='First Name')
+    last_name = forms.CharField(label='Last Name')
+    email = forms.CharField(label='Email')
+    
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+class EditProfileForm(forms.ModelForm):
+    website = forms.CharField(required=False, label='Website')
+    picture = forms.ImageField(required=False, label='Profile Picture')
+    
+    class Meta:
+        model = UserProfile
+        fields = ['website', 'picture']
 
 #class UserForm(forms.ModelForm):
 #    password = forms.CharField(widget=forms.PasswordInput())
