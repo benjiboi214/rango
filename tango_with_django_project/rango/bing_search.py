@@ -1,3 +1,4 @@
+#NOTE THIS IS OLD, NEW SEARCH USES ELASTIC#
 import requests
 import sys
 from keys import BING_API_KEY

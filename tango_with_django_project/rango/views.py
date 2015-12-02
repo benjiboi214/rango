@@ -5,53 +5,6 @@ from rango.forms import CategoryForm, PageForm, EditUserForm, EditProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-from rango.bing_search import run_query
-
-# def index(request): #Hashed out is client side cookie example see below for session example.
-#    # Query the database for a list of ALL categories currently stored.
-    # Order the categories by no. likes in descending order.
-    # Retrieve the top 5 only - or all if less than 5.
-    # Place the list in our context_dict dictionary which will be passed to the template engine.
-#    category_list = Category.objects.all()
-#    page_list = Page.objects.order_by('-views')[:5]
-#    context_dict = {'categories': category_list, 'pages': page_list}
-#    
-#    #Get the number of visits to the site.
-    #We use the COOKIES.get() function to obtain the visits cookie.
-    #If the cookie exists, the value returned is casted to an integer.
-    #If the cookie doesn't exist, we default to zero and cast that.
-#    visits = int(request.COOKIES.get('visits', '1'))
-#    
-#    #Set the reset last visit to time a False default
-#    reset_last_visit_time = False
-#    response = render(request, 'rango/index.html', context_dict)
-#    #Does the cookie last_visit exist?
-#    if 'last_visit' in request.COOKIES:
-#        # Yes it does! Get the cookie's value.
-#        last_visit = request.COOKIES['last_visit']
-#        #Cast the value to a Python date/time value.
-#        last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
-#        
-#        #If it's been more than a day since the last visit...
-#        if (datetime.now() - last_visit_time).days > 0:
-#            visits += 1
-#            #And flag that the cookie last visit needs to be updated.
-#            reset_last_visit_time = True
-#    else:
-#        #Cookie last_visit doesn't exist, so flag that it should be set.
-#        reset_last_visit_time = True
-#        
-#        context_dict['visits'] = visits
-#        
-#        #Obtain our response object early so we can add cookie information.
-#        response = render(request, 'rango/index.html', context_dict)
-#    
-#    if reset_last_visit_time:
-#        response.set_cookie('last_visit', datetime.now())
-#        response.set_cookie('visits', visits)
-#    
-#    #Return response back to the user, updating any cookies that eed to be changed.
-#    return response
 
 def index(request):
     category_list = Category.objects.order_by('-likes')[:5]
@@ -193,7 +146,7 @@ def restricted(request):
 @login_required
 def profile_view(request):
     user = request.user
-    profile = UserProfile.objects.get(id=request.user.id)
+    profile = UserProfile.objects.get(user=request.user)
     user_initial = {
         'first_name':user.first_name, 
         'last_name':user.last_name, 
@@ -227,41 +180,6 @@ def profile_view(request):
         "profileform": profileform}
     
     return render(request, 'registration/profile.html', context)
-
-#Hashed out copy of above function prior to throwing in POST stuff.
-#@login_required
-#def profile_view(request):
-#    user = request.user
-#    profile = UserProfile.objects.get(id=request.user.id)
-#    userform = EditUserForm(initial={
-#        'first_name':user.first_name, 
-#        'last_name':user.last_name, 
-#        'email':user.email})
-#    profileform = EditProfileForm(initial={
-#        'website':profile.website, 
-#        'picture':profile.picture})
-#    
-#    context = {
-#        "userform": userform,
-#        "profileform": profileform}
-#    
-#    return render(request, 'registration/profile.html', context)
-
-#@login_required
-#def edit_profile(request):
-    
-
-def search(request):
-    result_list = []
-    
-    if request.method == 'POST':
-        query = request.POST['query'].strip()
-        
-        if query:
-            #Run our Bing functions
-            result_list = run_query(query)
-    
-    return render(request, 'rango/search.html', {'result_list': result_list})
 
 def track_url(request):
     page_id = None
@@ -388,3 +306,64 @@ def track_url(request):
 #    
 #    #Take the user back to the homepage.
 #    return HttpResponseRedirect('/rango/')
+
+
+#COOKIE INDEX EXAMPLES BELOW#
+# def index(request): #Hashed out is client side cookie example see below for session example.
+#    # Query the database for a list of ALL categories currently stored.
+    # Order the categories by no. likes in descending order.
+    # Retrieve the top 5 only - or all if less than 5.
+    # Place the list in our context_dict dictionary which will be passed to the template engine.
+#    category_list = Category.objects.all()
+#    page_list = Page.objects.order_by('-views')[:5]
+#    context_dict = {'categories': category_list, 'pages': page_list}
+#    
+#    #Get the number of visits to the site.
+    #We use the COOKIES.get() function to obtain the visits cookie.
+    #If the cookie exists, the value returned is casted to an integer.
+    #If the cookie doesn't exist, we default to zero and cast that.
+#    visits = int(request.COOKIES.get('visits', '1'))
+#    
+#    #Set the reset last visit to time a False default
+#    reset_last_visit_time = False
+#    response = render(request, 'rango/index.html', context_dict)
+#    #Does the cookie last_visit exist?
+#    if 'last_visit' in request.COOKIES:
+#        # Yes it does! Get the cookie's value.
+#        last_visit = request.COOKIES['last_visit']
+#        #Cast the value to a Python date/time value.
+#        last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
+#        
+#        #If it's been more than a day since the last visit...
+#        if (datetime.now() - last_visit_time).days > 0:
+#            visits += 1
+#            #And flag that the cookie last visit needs to be updated.
+#            reset_last_visit_time = True
+#    else:
+#        #Cookie last_visit doesn't exist, so flag that it should be set.
+#        reset_last_visit_time = True
+#        
+#        context_dict['visits'] = visits
+#        
+#        #Obtain our response object early so we can add cookie information.
+#        response = render(request, 'rango/index.html', context_dict)
+#    
+#    if reset_last_visit_time:
+#        response.set_cookie('last_visit', datetime.now())
+#        response.set_cookie('visits', visits)
+#    
+#    #Return response back to the user, updating any cookies that eed to be changed.
+#    return response
+
+#OLD SEARCH VIEW#
+#def search(request):
+#    result_list = []
+#    
+#    if request.method == 'POST':
+#        query = request.POST['query'].strip()
+#        
+#        if query:
+#            #Run our Bing functions
+#            result_list = run_query(query)
+#    
+#    return render(request, 'rango/search.html', {'result_list': result_list})
