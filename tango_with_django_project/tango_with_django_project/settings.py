@@ -53,7 +53,8 @@ INSTALLED_APPS = (
     'elasticsearch',
     'haystack',
     'rango',
-    'registration'
+    'registration',
+    'floppyforms'
 )
 
 MIDDLEWARE_CLASSES = (

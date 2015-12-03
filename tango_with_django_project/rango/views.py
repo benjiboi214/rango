@@ -145,6 +145,7 @@ def restricted(request):
 
 @login_required
 def profile_view(request):
+    print request 
     user = request.user
     profile = UserProfile.objects.get(user=request.user)
     user_initial = {
@@ -159,14 +160,14 @@ def profile_view(request):
         userform = EditUserForm(data=request.POST, initial=user_initial)
         profileform = EditProfileForm(request.POST, request.FILES, initial=profile_initial)
         if userform.is_valid() and profileform.is_valid():
-            user.first_name = request.POST['first_name']
-            user.last_name = request.POST['last_name']
-            user.email = request.POST['email']
+            user.first_name = userform.cleaned_data['first_name']
+            user.last_name = userform.cleaned_data['last_name']
+            user.email = userform.cleaned_data['email']
             user.save()
             
-            profile.website = request.POST['website']
+            profile.website = profileform.cleaned_data['website']
             if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
+                profile.picture = profileform.cleaned_data['picture']
             profile.save()
             
             return HttpResponseRedirect('/rango/profile')
