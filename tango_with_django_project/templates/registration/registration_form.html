@@ -1,14 +1,15 @@
 {% extends "rango/base.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block body_block %}
-    
-    <form role="form" id="registration_form" method="post" action=".">
-        <h2>Register Here</h2>
-        
-        {% csrf_token %}
-        {{ form.as_p }}
-        
-        <br/>
-        <button class="btn btn-primary" type="submit" name="submit">Register</button>
-    </form>
+
+<div class="col-lg-10 col-lg-offset-2">
+    <h2>Register Here</h2>
+</div>
+
+<div>
+    {% crispy form %}
+</div>
+
 {% endblock %}

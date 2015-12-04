@@ -50,11 +50,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'elasticsearch',
-    'haystack',
-    'rango',
-    'registration',
-    'floppyforms'
+    'elasticsearch', #Search functionality
+    'haystack', #plugin for django to elasticsearch
+    'rango', #my app
+    'registration', #registration-redux package for streamlined registration
+    'crispy_forms'
+    #'floppyforms' #form handling.
 )
 
 MIDDLEWARE_CLASSES = (
@@ -114,3 +115,5 @@ HAYSTACK_CONNECTIONS = {
         'INDEX_NAME': 'haystack',
     },
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

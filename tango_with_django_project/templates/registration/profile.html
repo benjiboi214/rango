@@ -1,15 +1,29 @@
 {% extends "rango/base.html" %}
 
+{% block title %}Edit Profile{% endblock %}
+
 {% block body_block %}
-    
-    <form role="form" id="profile_form" method="post" action="{% url 'profile' %}" enctype="multipart/form-data">
-        <h2>Edit Profile</h2>
+
+{% load crispy_forms_tags %}
+
+<div class="col-lg-10 col-lg-offset-2">
+    <h2>Edit Profile</h2>
+</div>
+
+<div>
+    <form class="form-horizontal" role="form" id="profile_form" method="post" action="{% url 'profile' %}" enctype="multipart/form-data">
         
-        {% csrf_token %}
-        {{ userform.as_p }}
-        {{ profileform.as_p }}
+        {% crispy userform %}
+        {% crispy profileform %}
         
-        <br/>
-        <button class="btn btn-primary" type="submit" name="submit">Submit</button>
+        <div class="form-group">
+            <div class="aab controls col-lg-2"></div>
+            <div class="controls col-lg-8">
+                <input class="btn btn-primary" type="submit" name="submit" value="Submit" class="btn btn-primary" id="submit-id-submit">
+            </div>
+        </div>
+        
     </form>
+</div>
+
 {% endblock %}
