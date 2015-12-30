@@ -2,4 +2,5 @@
 *.DS_Store
 *benweb*
 keys.py
+*.sqlite3
 profile_images/
